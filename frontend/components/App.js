@@ -25,6 +25,60 @@ export default class App extends React.Component {
     }
   }
 
+  handleAdd = (name) => {
+    // set State
+    // change todos 
+    // make a copy todos
+    // add a new todo to the end
+
+    const newTodo = {
+        name: name, 
+        id: Date.now(), 
+        completed: false
+    };
+
+    this.setState({
+      ...this.state, 
+      todos: [...this.state.todos, newTodo]
+    });
+  }
+
+  handleClear = () => {
+      // setState 
+      // loop through all todos
+      // remove all todos that have completed === true
+      // save filtered todos to state.
+      this.setState = ({
+          ...this.state,
+          todos: this.state.todos.filter(todo => {
+            return (todo.completed === false)
+          })
+      });
+
+   }
+  handleToggle = (clickedId) => {
+    // set state
+    // change todos
+    // find the todo 
+    // flip the value of ccompleted for that todo
+    // keep all other todos the same 
+    
+
+    this.setState({
+        ...this.state, 
+        todos: this.state.todos.map(todo => {
+            if (todo.id === clickedId) {
+              return {
+                ...todo, 
+                completed: !todo.completed
+              }
+            } else {
+              return todo;
+            }
+        })
+    });
+  }
+  
 
   render() {
     const { todos } = this.state;
@@ -33,10 +87,10 @@ export default class App extends React.Component {
       <div>
         <h1> Todos: </h1>
         
-        <TodoList todos={todos}/>
-        <Form />
+        <TodoList  handleToggle={this.handleToggle} todos={todos}/>
+        <Form handleAdd={this.handleAdd}/>
         
-        <button>Hide Completed</button>
+        <button onClick={this.handleClear}>Hide Completed</button>
       </div>
     )
   }
